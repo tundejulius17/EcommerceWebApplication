@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>Ecommerce</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<session-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+	
+	<!-- define a context initialization parameter -->
+    <context-param>
+        <param-name>custServEmailAddress</param-name>
+        <param-value>email_address_for_customer_service</param-value>
+    </context-param>
+	
+	<listener>
+		<listener-class>appUtil.AppContextListener</listener-class>
+	</listener>
+
+	<security-role>
+		<description>owner</description>
+		<role-name>manager</role-name>
+	</security-role>
+
+	<security-constraint>
+		<!-- Restrict access to the URLs in the admin directory -->
+		<web-resource-collection>
+			<web-resource-name>Admin</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+
+		<!-- Authorize the service and programmer roles -->
+		<auth-constraint>
+			<!-- <role-name>service</role-name> -->
+			<role-name>manager</role-name>
+		</auth-constraint>
+
+
+		<!-- <user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint> -->
+
+	</security-constraint>
+
+	<!-- Use form-based authentication to provide access -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/login_error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+
+</web-app>
